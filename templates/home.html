@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pandora STORE Flask{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/estilo.css') }}">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <h1>Athena STORE</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/criar-conta">Criar Conta</a></li>
+                <li><a href="/galeria">galeria</a></li>
+            </ul>
+        </nav>
+       
+        <img src="static/img/logo.jpeg" alt="Imagem desenho teste" class="about-image">
+        <p>Onde Voce encotra oque procura</p>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Pandora Store</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+    <p id="mensagem"></p>
+
+    <script>
+        // Obtém a mensagem da URL
+        const params = new URLSearchParams(window.location.search);
+        const mensagem = params.get("mensagem");
+
+        if (mensagem) {
+            document.getElementById("mensagem").innerText = mensagem;
+        }
+    </script>
+</body>
+</html>
